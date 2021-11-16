@@ -3,13 +3,16 @@ using Hiking.Data.DataLayers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Hiking
@@ -34,6 +37,10 @@ namespace Hiking
 
             services.AddDbContext<HikingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("HikingContext")), ServiceLifetime.Scoped);
 
+
+      
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +56,18 @@ namespace Hiking
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            //Allows to enter input decimal values
+            app.Use(async (context, next) =>
+            {
+                var currentThreadCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
+                currentThreadCulture.NumberFormat = NumberFormatInfo.InvariantInfo;
+
+                Thread.CurrentThread.CurrentCulture = currentThreadCulture;
+                Thread.CurrentThread.CurrentUICulture = currentThreadCulture;
+
+                await next();
+            });
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -60,8 +79,22 @@ namespace Hiking
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}"
+                    
+                 );
+
+             
+                endpoints.MapControllerRoute(
+             name: "edithike",
+             pattern: "edit-hike/{id}",
+             defaults: new { controller = "Home", action = "Edit" },
+             constraints: new { id = @"\d+" } // on checke si c'est un entier
+                                              //constraints: new { id = new LogConstraint() }
+                                              //constraints: new { id = new LogConstraint() }
+             );
             });
+
+
         }
     }
 }

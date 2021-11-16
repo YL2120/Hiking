@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hiking.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +22,12 @@ namespace Hiking.Data.DataLayers
                         select item;
             
             return query.ToList();
+        }
+
+        public Hike EditItem(int id)
+        {
+            
+            return this.context.Hikes.FirstOrDefault(item => item.Id == id);
         }
     }
 }

@@ -13,19 +13,20 @@ namespace Hiking.Data.Models
         [Key] //Primary key
         public int Id { get; set; }
         
-        [Required]
+        [Required(AllowEmptyStrings = false)]
         public string Name { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false)]
         public string Difficulty { get; set; }
 
-        [Required]
+        [Required (AllowEmptyStrings = false)]
+       
         public decimal Distance { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false)]
         public TimeSpan Duration { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false)]
         public int Height_difference { get; set; }
     }
 }
