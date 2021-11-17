@@ -24,6 +24,7 @@ namespace Hiking.Data.Models
         public decimal Distance { get; set; }
 
         [Required(AllowEmptyStrings = false)]
+        [DisplayFormat(DataFormatString =  @"{0:hh\hmm}")]
         public TimeSpan Duration { get; set; }
 
         [Required(AllowEmptyStrings = false)]

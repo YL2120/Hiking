@@ -19,15 +19,16 @@
         @foreach (var hike in Model) // Model est un mot clé
         {
 
-            <tr>
-                <td>@x</td>
-                <td>@hike.Name</td>
-                <td>@hike.Difficulty</td>
-                <td>@hike.Distance km</td>
-                <td>@hike.Duration.ToString(@"hh\hmm")</td>
-                <td>@hike.Height_difference m</td>
-                <td><a class="btn btn-primary" asp-controller="Home" asp-action="Edit" asp-route-id="@hike.Id">Edit</a></td>
-            </tr>
+        <tr>
+            <td>@x</td>
+            <td>@hike.Name</td>
+            <td>@hike.Difficulty</td>
+            <td>@hike.Distance km</td>
+            <td>@hike.Duration.ToString(@"hh\hmm")</td>
+            <td>@hike.Height_difference m</td>
+            <td><a class="btn btn-primary" asp-controller="Hike" asp-action="Edit" asp-route-id="@hike.Id">Edit</a></td>
+            <td><a class="btn btn-danger" asp-controller="Hike" asp-action="Delete" asp-route-id="@hike.Id">Delete</a></td>
+        </tr>
             x++;
         }
     </tbody>

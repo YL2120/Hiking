@@ -24,10 +24,28 @@ namespace Hiking.Data.DataLayers
             return query.ToList();
         }
 
-        public Hike EditItem(int id)
+        public Hike PreFilledHike(int id)
         {
             
             return this.context.Hikes.FirstOrDefault(item => item.Id == id);
+        }
+
+        public void Add(Hike hike)
+        {
+            this.context.Hikes.Add(hike);
+            this.context.SaveChanges();
+        }
+
+        public void Update (Hike hike)
+        {
+            this.context.Hikes.Update(hike);
+            this.context.SaveChanges();
+        }
+
+        public void Delete(Hike hike)
+        {
+            this.context.Hikes.Remove(hike);
+            this.context.SaveChanges();
         }
     }
 }

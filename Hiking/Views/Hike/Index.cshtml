@@ -1,0 +1,15 @@
+﻿@using Hiking.Data.Models
+@model List<Hike>
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+
+<div class="text-center">
+    <h1 class="display-4">Hikes for health</h1>
+</div>
+
+<partial name="_ListHikes" />
+<a class="btn btn-success" asp-controller="Hike" asp-action="Create">Add a new hike</a>
+

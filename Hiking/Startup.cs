@@ -87,7 +87,7 @@ namespace Hiking
                 endpoints.MapControllerRoute(
              name: "edithike",
              pattern: "edit-hike/{id}",
-             defaults: new { controller = "Home", action = "Edit" },
+             defaults: new { controller = "Hike", action = "Edit" },
              constraints: new { id = @"\d+" } // on checke si c'est un entier
                                               //constraints: new { id = new LogConstraint() }
                                               //constraints: new { id = new LogConstraint() }
