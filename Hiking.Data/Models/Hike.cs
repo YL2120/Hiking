@@ -24,10 +24,11 @@ namespace Hiking.Data.Models
         public decimal Distance { get; set; }
 
         [Required(AllowEmptyStrings = false)]
+        [RegularExpression(@"^(?:[01][0-9]|2[0-3]):[0-5][0-9]$", ErrorMessage = "Invalid time format and hh:mm values.")]
         [DisplayFormat(DataFormatString =  @"{0:hh\hmm}")]
         public TimeSpan Duration { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
+        [Required (AllowEmptyStrings = false, ErrorMessage = "The Height Difference is required")]
         public int Height_difference { get; set; }
 
         [Required]
