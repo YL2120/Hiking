@@ -29,5 +29,8 @@ namespace Hiking.Data.Models
 
         [Required(AllowEmptyStrings = false)]
         public int Height_difference { get; set; }
+
+        [Required]
+        public string Available { get; set; }
     }
 }
