@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Edit";
+    string[] difficulties = { "Easy", "Average", "Difficult", "Very difficult" };
+    string[] disponibilities = { "Yes", "Thunderstorm", "Blizzard", "Landslide", "Heatwave" };
 }
 
 <h1>Edit the hike.</h1>
@@ -19,7 +21,18 @@
             </div>
             <div class="form-group">
                 <label asp-for="Difficulty" class="control-label"></label>
-                <input asp-for="Difficulty" class="form-control" />
+                <select class="form-select" name="Difficulty" id="Difficulty">
+                    <option selected>@Model.Difficulty</option>
+                    @foreach (string difficulty in difficulties)
+                    {
+                        if (difficulty != Model.Difficulty)
+                        {
+                          <option value="@difficulty">@difficulty</option>
+                         }
+                            
+                     }
+
+                </select>
                 <span asp-validation-for="Difficulty" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -29,7 +42,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Duration" class="control-label"></label>
-                <input asp-for="Duration" class="form-control" />
+                <input asp-for="Duration" class="form-control" value="@Model.Duration.ToString(@"hh\:mm")"/>
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -39,7 +52,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Available" class="control-label"> Height Difference</label>
-                <input asp-for="Available" class="form-control" />
+                <select class="form-select" name="Available" id="Available">
+                    <option selected>@Model.Available</option>
+                    @foreach (string disponibility in disponibilities)
+                    {
+                        if (disponibility != Model.Available)
+                        {
+                            <option value="@disponibility">@disponibility</option>
+                        }
+
+                    }
+                </select>
                 <span asp-validation-for="Available" class="text-danger"></span>
             </div>
             <div class="form-group mt-2">
