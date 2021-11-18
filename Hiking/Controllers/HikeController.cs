@@ -1,6 +1,7 @@
 ﻿using Hiking.Data;
 using Hiking.Data.DataLayers;
 using Hiking.Data.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace Hiking.Controllers
             this.hikedatalayer = hikedatalayer;
         }
         
+        //[Authorize] // you need to be an authorized user to see the list.
         public IActionResult Index()
         {
             return View(this.hikedatalayer.DisplayAll());
