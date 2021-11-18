@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hiking.Data.Migrations
 {
     [DbContext(typeof(HikingContext))]
-    [Migration("20211115153752_ColumnNamesAndMessages")]
-    partial class ColumnNamesAndMessages
+    [Migration("20211118234227_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,6 +28,10 @@ namespace Hiking.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Available")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Difficulty")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -36,13 +40,10 @@ namespace Hiking.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<TimeSpan>("Duration")
-                        .HasMaxLength(4)
-                        .HasColumnType("time")
-                        .HasColumnName("Hours & Minutes");
+                        .HasColumnType("time");
 
                     b.Property<int>("Height_difference")
-                        .HasColumnType("int")
-                        .HasColumnName("Height difference");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()

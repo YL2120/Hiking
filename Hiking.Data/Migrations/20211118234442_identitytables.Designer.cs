@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hiking.Data.Migrations
 {
     [DbContext(typeof(HikingContext))]
-    [Migration("20211117135425_AddingAvailableColumn")]
-    partial class AddingAvailableColumn
+    [Migration("20211118234442_identitytables")]
+    partial class identitytables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

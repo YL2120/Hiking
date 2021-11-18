@@ -2,7 +2,7 @@
 
 namespace Hiking.Data.Migrations
 {
-    public partial class HikingUser : Migration
+    public partial class identitytables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

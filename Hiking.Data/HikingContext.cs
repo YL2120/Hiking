@@ -1,4 +1,6 @@
-﻿using Hiking.Data.Models;
+﻿
+
+using Hiking.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Hiking.Data
 {
-    public class HikingContext : IdentityDbContext<IdentityUser>
+    public class HikingContext : IdentityDbContext
     {
 
 

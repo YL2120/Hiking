@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Hiking.Data.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class newidentity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Hiking.Data.Migrations
 {
-    public partial class CreationTable : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,8 @@ namespace Hiking.Data.Migrations
                     Difficulty = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Distance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Duration = table.Column<TimeSpan>(type: "time", nullable: false),
-                    Height_difference = table.Column<int>(type: "int", nullable: false)
+                    Height_difference = table.Column<int>(type: "int", nullable: false),
+                    Available = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -1,4 +1,4 @@
-using Hiking.Areas.Identity.Data;
+
 using Hiking.Data;
 using Hiking.Data.DataLayers;
 using Microsoft.AspNetCore.Builder;
@@ -33,8 +33,8 @@ namespace Hiking
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
-
-
+            services.AddMvc();
+            
             string connectionString = Configuration.GetConnectionString("HikingContext"); // qui se trouve dans l'appsettings.json
 
             services.AddTransient<HikeDataLayer, HikeDataLayer>(); // on injecte une dépendance et on s'assure que c'est la bonne instance qui est renvoyée
@@ -45,8 +45,8 @@ namespace Hiking
 
 
 
-            services.AddDefaultIdentity<HikingUser>()
-                .AddEntityFrameworkStores<HikingContext>();
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                 .AddEntityFrameworkStores<HikingContext>();
 
 
 
@@ -83,13 +83,15 @@ namespace Hiking
 
             app.UseRouting();
 
-            app.UseAuthentication();
+            
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
 
-                
+                endpoints.MapControllers();
+                endpoints.MapRazorPages();
                 
                 endpoints.MapControllerRoute(
                     name: "default",
