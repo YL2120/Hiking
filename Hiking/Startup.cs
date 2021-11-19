@@ -1,10 +1,12 @@
 
 using Hiking.Data;
 using Hiking.Data.DataLayers;
+using Hiking.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,8 +40,10 @@ namespace Hiking
             string connectionString = Configuration.GetConnectionString("HikingContext"); // qui se trouve dans l'appsettings.json
 
             services.AddTransient<HikeDataLayer, HikeDataLayer>(); // on injecte une dépendance et on s'assure que c'est la bonne instance qui est renvoyée
+            services.AddTransient<IEmailSender, EmailSender>();
 
-            
+
+
 
             services.AddDbContext<HikingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("HikingContext")), ServiceLifetime.Scoped);
 

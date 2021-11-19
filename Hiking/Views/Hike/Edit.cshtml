@@ -41,7 +41,7 @@
                 <span asp-validation-for="Distance" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Duration" class="control-label"></label>
+                <label asp-for="Duration" class="control-label">Duration (Hours:Minutes)</label>
                 <input asp-for="Duration" class="form-control" value="@Model.Duration.ToString(@"hh\:mm")"/>
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
