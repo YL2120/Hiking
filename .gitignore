@@ -361,6 +361,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-
-# SendGrid API Key
-C:\Users\Yassine\Desktop\BeCode - Personnel\.NET\Hiking\Hiking\Services\EmailSender.cs
