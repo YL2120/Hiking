@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
@@ -10,9 +11,16 @@ namespace Hiking.Services
 {
     public class EmailSender : IEmailSender
     {
+
+        private readonly IConfiguration _config; //access to secret
+        public EmailSender(IConfiguration config)
+        {
+            _config = config;
+        }
+        
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            var sendGridKey = @"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";
+            var sendGridKey = @_config.GetValue<string>("ExternalProviders:SendGridAPI");
             return Execute(sendGridKey, subject, htmlMessage, email);
         }
 
@@ -21,7 +29,7 @@ namespace Hiking.Services
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("yassinelayachi@outlook.com", "BeCodeDev via SendGrid"),
+                From = new EmailAddress(_config.GetValue<string>("Email"), "BeCode Junior YL via SendGrid"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message

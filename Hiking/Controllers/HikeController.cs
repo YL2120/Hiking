@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Hiking.Controllers
 {
+    [Authorize]
     public class HikeController : Controller
     {
 
