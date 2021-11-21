@@ -36,8 +36,15 @@ namespace Hiking.Data.Models
         [Required]
         public string Available { get; set; }
 
-        [ForeignKey("User")]
+        
+        
+        [Column(TypeName = "nvarchar(256)")]
         public string UserName { get; set; }
-        public virtual IdentityUser User { get; set; }
+
+        //[ForeignKey("UserId")]
+        //public string UserId { get; set; }
+        //public virtual IdentityUser User { get; set; }
+
+
     }
 }

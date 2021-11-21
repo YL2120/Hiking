@@ -1,4 +1,5 @@
 ﻿using Hiking.Data.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +11,15 @@ namespace Hiking.Data.DataLayers
     {
         
         private HikingContext context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public HikeDataLayer(HikingContext context)
+        public HikeDataLayer(HikingContext context, UserManager<IdentityUser> userManager)
         {
             this.context = context;
+            _userManager = userManager;
         }
 
-        public List<Models.Hike> DisplayAll()
+        public List<Hike> DisplayAll()
         {
             var query = from item in this.context.Hikes // va chercher toutes les données de la table
                         select item;
@@ -30,9 +33,23 @@ namespace Hiking.Data.DataLayers
             return this.context.Hikes.FirstOrDefault(item => item.Id == id);
         }
 
-        public void Add(Hike hike)
+        public void Add(Hike hike, string CurrentUsername)
         {
-            this.context.Hikes.Add(hike);
+           
+            
+            Hike newhike = new Hike()
+            {
+                Name = hike.Name,
+                Difficulty = hike.Difficulty,
+                Distance = hike.Distance,
+                Duration = hike.Duration,
+                Height_difference = hike.Height_difference,
+                Available = hike.Available,
+                UserName = CurrentUsername
+            };
+           
+            
+            this.context.Hikes.Add(newhike);
             this.context.SaveChanges();
         }
 
