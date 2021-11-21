@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -34,5 +35,9 @@ namespace Hiking.Data.Models
 
         [Required]
         public string Available { get; set; }
+
+        [ForeignKey("User")]
+        public string UserName { get; set; }
+        public virtual IdentityUser User { get; set; }
     }
 }

@@ -29,4 +29,8 @@
     <ProjectReference Include="..\Hiking.Data\Hiking.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Profile\" />
+  </ItemGroup>
+
 </Project>
