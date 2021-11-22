@@ -50,7 +50,7 @@ namespace Hiking
 
 
             services.AddIdentity<IdentityUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                 .AddEntityFrameworkStores<HikingContext>();
+                 .AddEntityFrameworkStores<HikingContext>().AddDefaultUI().AddDefaultTokenProviders(); 
 
 
 

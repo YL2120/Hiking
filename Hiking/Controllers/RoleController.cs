@@ -4,11 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Hiking.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Identity.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private RoleManager<IdentityRole> roleManager;
@@ -20,6 +22,7 @@ namespace Identity.Controllers
         }
 
         public ViewResult Index() => View(roleManager.Roles);
+
 
         private void Errors(IdentityResult result)
         {
