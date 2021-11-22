@@ -1,4 +1,9 @@
-﻿@{ 
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
     int x = 1;
 }
 
@@ -13,6 +18,7 @@
             <th scope="col">Duration</th>
             <th scope="col">Height Difference </th>
             <th scope="col">Available </th>
+            <th scope="col">Created by</th>
         </tr>
     </thead>
     <tbody>
@@ -28,8 +34,13 @@
             <td>@hike.Duration.ToString(@"hh\hmm")</td>
             <td>@hike.Height_difference m</td>
             <td>@hike.Available</td>
+            <td>@hike.UserName</td>
             <td><a class="btn btn-primary" asp-controller="Hike" asp-action="Edit" asp-route-id="@hike.Id">Edit</a></td>
-            <td><a class="btn btn-danger" asp-controller="Hike" asp-action="Delete" asp-route-id="@hike.Id">Delete</a></td>
+            @if (@UserManager.GetUserName(User) == @hike.UserName)
+            {
+                <td><a class="btn btn-danger" asp-controller="Hike" asp-action="Delete" asp-route-id="@hike.Id">Delete</a></td>
+            }
+
         </tr>
             x++;
         }

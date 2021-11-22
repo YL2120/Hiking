@@ -2,6 +2,7 @@
 using Hiking.Data.DataLayers;
 using Hiking.Data.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,16 +17,20 @@ namespace Hiking.Controllers
 
         private readonly HikingContext context;
         private HikeDataLayer hikedatalayer;
+        private readonly UserManager<IdentityUser> _userManager; // in order to get the id of the current user logged in
 
-        public HikeController (HikingContext context, HikeDataLayer hikedatalayer)
+
+        public HikeController (HikingContext context, HikeDataLayer hikedatalayer, UserManager<IdentityUser> userManager)
         {
             this.context = context;
             this.hikedatalayer = hikedatalayer;
+            _userManager = userManager;
         }
         
         //[Authorize] // you need to be an authorized user to see the list.
         public IActionResult Index()
         {
+            
             return View(this.hikedatalayer.DisplayAll());
         }
 
@@ -59,7 +64,8 @@ namespace Hiking.Controllers
 
             if (this.ModelState.IsValid) // on vérifie que le modèle est bien valide
             {
-                this.hikedatalayer.Add(hike);
+                var id = _userManager.GetUserName(User); // get username currently logged in
+                this.hikedatalayer.Add(hike,id);
                 result = this.RedirectToAction("SuccessOperationMessage");
             }
 
