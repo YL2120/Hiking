@@ -49,8 +49,8 @@ namespace Hiking
 
 
 
-            services.AddIdentity<IdentityUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                 .AddEntityFrameworkStores<HikingContext>().AddDefaultUI().AddDefaultTokenProviders(); 
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
+                 .AddEntityFrameworkStores<HikingContext>().AddDefaultTokenProviders(); 
 
 
 
@@ -58,8 +58,10 @@ namespace Hiking
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<IdentityUser> userManager)
         {
+            ApplicationDbInitializer.SeedUsers(userManager,Configuration);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -116,5 +118,7 @@ namespace Hiking
 
 
         }
+
+      
     }
 }
