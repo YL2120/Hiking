@@ -70,7 +70,7 @@ namespace Identity.Controllers
             IdentityRole role = await roleManager.FindByIdAsync(id);
             List<IdentityUser> members = new List<IdentityUser>();
             List<IdentityUser> nonMembers = new List<IdentityUser>();
-            foreach (IdentityUser user in userManager.Users)
+            foreach (IdentityUser user in userManager.Users.ToList())
             {
                 var list = await userManager.IsInRoleAsync(user, role.Name) ? members : nonMembers;
                 list.Add(user);
@@ -119,5 +119,3 @@ namespace Identity.Controllers
     }
 }
 
-    }
-}

@@ -1,10 +1,11 @@
 ﻿using Hiking.Models;
+using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Identity.TagHelpers
+namespace Hiking.TagHelpers
 {
     [HtmlTargetElement("td", Attributes = "i-role")]
     public class RoleUsersTH : TagHelper
@@ -27,7 +28,8 @@ namespace Identity.TagHelpers
             IdentityRole role = await roleManager.FindByIdAsync(Role);
             if (role != null)
             {
-                foreach (var user in userManager.Users)
+               
+                foreach (var user in userManager.Users.ToList())
                 {
                     if (user != null && await userManager.IsInRoleAsync(user, role.Name))
                         names.Add(user.UserName);
