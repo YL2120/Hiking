@@ -49,18 +49,33 @@ namespace Hiking
 
 
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
-                 .AddEntityFrameworkStores<HikingContext>().AddDefaultTokenProviders(); 
+            services.AddDefaultIdentity<IdentityUser>(options => {
+                options.SignIn.RequireConfirmedAccount = true;
+                options.User.RequireUniqueEmail = true;
+            }).AddRoles<IdentityRole>()
+                 .AddEntityFrameworkStores<HikingContext>().AddDefaultTokenProviders();
 
+            //services.Configure<IdentityOptions>(options =>
+            //{
 
+            //    options.User.RequireUniqueEmail = true;
+
+            //});
+
+            services.AddRazorPages(options =>
+            {
+                options.Conventions.AuthorizeFolder("/Role");
+                options.Conventions.AddAreaPageRoute("Identity", "/Account/Manage/Index", "/MyProfile");
+                options.Conventions.AddAreaPageRoute("Identity", "/Account/Login", "/Login");
+            });
 
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<IdentityUser> userManager)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            ApplicationDbInitializer.SeedUsers(userManager,Configuration);
+            ApplicationDbInitializer.SeedUsers(userManager,roleManager,Configuration);
 
             if (env.IsDevelopment())
             {
@@ -114,6 +129,10 @@ namespace Hiking
                                               //constraints: new { id = new LogConstraint() }
                                               //constraints: new { id = new LogConstraint() }
              );
+
+                
+
+
             });
 
 

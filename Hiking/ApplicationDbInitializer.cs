@@ -11,7 +11,7 @@ namespace Hiking
     {
 
 
-        public static void SeedUsers(UserManager<IdentityUser> userManager, IConfiguration config)
+        public static void SeedUsers(UserManager<IdentityUser> userManager,RoleManager<IdentityRole> roleManager, IConfiguration config)
         {
             IConfiguration _config = config;
             if (userManager.FindByEmailAsync(_config.GetValue<string>("Admin:Email")).Result == null)
@@ -24,7 +24,10 @@ namespace Hiking
                 };
 
                 string password = _config.GetValue<string>("Admin:Password");
+
+                IdentityResult role = roleManager.CreateAsync(new IdentityRole("Admin")).Result;
                 IdentityResult result = userManager.CreateAsync(user, password).Result;
+                
 
                 if (result.Succeeded)
                 {

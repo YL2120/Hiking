@@ -36,7 +36,7 @@
             <td>@hike.Available</td>
             <td>@hike.UserName</td>
             <td><a class="btn btn-primary" asp-controller="Hike" asp-action="Edit" asp-route-id="@hike.Id">Edit</a></td>
-            @if (@UserManager.GetUserName(User) == @hike.UserName)
+            @if (@UserManager.GetUserName(User) == @hike.UserName || User.IsInRole("Admin"))
             {
                 <td><a class="btn btn-danger" asp-controller="Hike" asp-action="Delete" asp-route-id="@hike.Id">Delete</a></td>
             }
