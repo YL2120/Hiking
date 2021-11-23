@@ -53,9 +53,15 @@ namespace Hiking.Data.DataLayers
             this.context.SaveChanges();
         }
 
-        public void Update (Hike hike)
+        public void Update (Hike query,Hike hike)
         {
-            this.context.Hikes.Update(hike);
+            query.Name = hike.Name;
+            query.Duration = hike.Duration;
+            query.Difficulty = hike.Difficulty;
+            query.Available = hike.Available;
+            query.Height_difference = hike.Height_difference;
+            
+            this.context.Hikes.Update(query);
             this.context.SaveChanges();
         }
 

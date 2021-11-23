@@ -88,11 +88,16 @@ namespace Hiking.Controllers
         public ActionResult Edit(Hike hike)
         {
             ActionResult result = this.View(hike); // vue de base
-
+            
             if (this.ModelState.IsValid) // on vérifie que le modèle est bien valide
             {
-                this.hikedatalayer.Update(hike);
-                result = this.RedirectToAction("EditOperationMessage");
+                Hike query = (from c in this.context.Hikes.Where(c => c.Id == hike.Id) select c).FirstOrDefault();// use FirstOrDefault() to prevent an exception if the user changes you input for the ID.
+                if (query != null)
+                {
+                    this.hikedatalayer.Update(query, hike);
+                    result = this.RedirectToAction("EditOperationMessage");
+                }
+                    
             }
 
             return result;
