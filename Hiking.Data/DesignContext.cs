@@ -23,9 +23,13 @@ namespace Hiking.Data
             var config = builder.Build();
 
             var connectionString = config.GetConnectionString("HikingContext"); // il lit notre appsetting
+            var connectionStringProd = config.GetConnectionString("HikingContextProd"); // il lit notre appsetting
 
             DbContextOptionsBuilder<HikingContext> optionBuilder = new DbContextOptionsBuilder<HikingContext>();
-            optionBuilder.UseSqlServer(connectionString); //c'est ici qu'on précise quel DB on va utiliser.
+            //if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            //       optionBuilder.UseSqlServer(connectionStringProd);
+            //else
+                optionBuilder.UseSqlServer(connectionString);//c'est ici qu'on précise quel DB on va utiliser.
 
             return new HikingContext(optionBuilder.Options);
         }

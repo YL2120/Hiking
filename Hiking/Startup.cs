@@ -37,17 +37,22 @@ namespace Hiking
             services.AddRazorPages();
             services.AddMvc();
             
-            string connectionString = Configuration.GetConnectionString("HikingContext"); // qui se trouve dans l'appsettings.json
+           string connectionStringlocal = Configuration.GetConnectionString("HikingContextProd"); // qui se trouve dans l'appsettings.json
+           
+           
 
             services.AddTransient<HikeDataLayer, HikeDataLayer>(); // on injecte une dépendance et on s'assure que c'est la bonne instance qui est renvoyée
             services.AddTransient<IEmailSender, EmailSender>();
 
 
+            //Azure db check
+            if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+                services.AddDbContext<HikingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("HikingContextProd")), ServiceLifetime.Scoped);
+            else
+                services.AddDbContext<HikingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("HikingContext")), ServiceLifetime.Scoped);
 
-
-            services.AddDbContext<HikingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("HikingContext")), ServiceLifetime.Scoped);
-
-
+            //Perform databse migration automatically
+            //services.BuildServiceProvider().GetService<HikingContext>().Database.Migrate();
 
             services.AddDefaultIdentity<IdentityUser>(options => {
                 options.SignIn.RequireConfirmedAccount = true;
@@ -73,8 +78,13 @@ namespace Hiking
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager,HikingContext hikingcontext)
         {
+
+
+            //Perform databse migration automatically
+            hikingcontext.Database.Migrate();
+
             ApplicationDbInitializer.SeedUsers(userManager,roleManager,Configuration);
 
             if (env.IsDevelopment())
@@ -87,6 +97,8 @@ namespace Hiking
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+           
 
             //Allows to enter input decimal values
             app.Use(async (context, next) =>

@@ -14,6 +14,7 @@ namespace Hiking
         public static void SeedUsers(UserManager<IdentityUser> userManager,RoleManager<IdentityRole> roleManager, IConfiguration config)
         {
             IConfiguration _config = config;
+            string value = _config.GetValue<string>("Admin:Email");
             if (userManager.FindByEmailAsync(_config.GetValue<string>("Admin:Email")).Result == null)
             {
                 IdentityUser user = new IdentityUser
