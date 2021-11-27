@@ -53,8 +53,9 @@ namespace Identity.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
+            
             IdentityRole role = await roleManager.FindByIdAsync(id);
-            if (role != null)
+            if (role != null && role.Name != "Admin")
             {
                 IdentityResult result = await roleManager.DeleteAsync(role);
                 if (result.Succeeded)
@@ -70,13 +71,18 @@ namespace Identity.Controllers
         //UPDATE
         public async Task<IActionResult> Update(string id)
         {
+            
             IdentityRole role = await roleManager.FindByIdAsync(id);
             List<IdentityUser> members = new List<IdentityUser>();
             List<IdentityUser> nonMembers = new List<IdentityUser>();
             foreach (IdentityUser user in userManager.Users.ToList())
             {
-                var list = await userManager.IsInRoleAsync(user, role.Name) ? members : nonMembers;
-                list.Add(user);
+               
+
+                    var list = await userManager.IsInRoleAsync(user, role.Name) ? members : nonMembers;
+                    list.Add(user);
+                
+                
             }
             return View(new RoleEdit
             {
@@ -105,7 +111,7 @@ namespace Identity.Controllers
                 foreach (string userId in model.DeleteIds ?? new string[] { })
                 {
                     IdentityUser user = await userManager.FindByIdAsync(userId);
-                    if (user != null)
+                    if (user != null && user.UserName != "SuperUser")
                     {
                         result = await userManager.RemoveFromRoleAsync(user, model.RoleName);
                         if (!result.Succeeded)

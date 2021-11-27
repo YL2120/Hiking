@@ -15,6 +15,7 @@ namespace Hiking
         {
             IConfiguration _config = config;
             string value = _config.GetValue<string>("Admin:Email");
+            
             if (userManager.FindByEmailAsync(_config.GetValue<string>("Admin:Email")).Result == null)
             {
                 IdentityUser user = new IdentityUser
@@ -25,6 +26,7 @@ namespace Hiking
                 };
 
                 string password = _config.GetValue<string>("Admin:Password");
+
 
                 IdentityResult role = roleManager.CreateAsync(new IdentityRole("Admin")).Result;
                 IdentityResult result = userManager.CreateAsync(user, password).Result;

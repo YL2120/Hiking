@@ -18,12 +18,16 @@
         {
             @foreach (IdentityUser user in Model.NonMembers)
             {
-                <tr>
-                    <td>@user.UserName</td>
-                    <td>
-                        <input type="checkbox" name="AddIds" value="@user.Id">
-                    </td>
-                </tr>
+                @if (user.UserName != "SuperUser")
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>
+                                <input type="checkbox" name="AddIds" value="@user.Id">
+                            </td>
+                        </tr>
+                    }
+                    
             }
         }
     </table>
@@ -38,12 +42,16 @@
         {
             @foreach (IdentityUser user in Model.Members)
             {
-                <tr>
-                    <td>@user.UserName</td>
-                    <td>
-                        <input type="checkbox" name="DeleteIds" value="@user.Id">
-                    </td>
-                </tr>
+                @if (user.UserName != "SuperUser")
+                {
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>
+                            <input type="checkbox" name="DeleteIds" value="@user.Id">
+                        </td>
+                    </tr>
+                }
+
             }
         }
     </table>
